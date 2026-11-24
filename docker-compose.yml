@@ -12,6 +12,8 @@ services:
   api:
     build: .
     environment:
+      CLAIMFORGE_ENV: development
+      CLAIMFORGE_API_KEY: local-dev-key-do-not-use-in-production
       DATABASE_URL: postgresql+psycopg://claimforge:local-development-only@db:5432/claimforge
     ports:
       - "127.0.0.1:8000:8000"
