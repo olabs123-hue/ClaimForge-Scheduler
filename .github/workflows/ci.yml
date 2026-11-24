@@ -11,7 +11,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt pytest-cov
-      - run: python -m pytest -q tests/test_core.py --cov=claimforge.core --cov=claimforge.api --cov-report=term-missing --cov-report=json:coverage.json
+      - run: python -m pytest -q tests/test_core.py tests/test_showcase.py --cov=claimforge.core --cov=claimforge.api --cov-report=term-missing --cov-report=json:coverage.json
       - run: python scripts/collect_local_evidence.py
       - uses: actions/upload-artifact@v4
         with:
