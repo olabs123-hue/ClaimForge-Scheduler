@@ -1,12 +1,13 @@
 {
   "verification": "GitHub Actions completed successfully",
-  "run_url": "https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45395943869",
-  "commit_sha": "dd73049165d428cc496e748e824fe243811f94b6",
+  "run_url": "https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45397446865",
+  "commit_sha": "6b90d0f428175935571338f57410b170ef7b0d2e",
   "environment": "GitHub-hosted Ubuntu runner, disposable PostgreSQL 16 service",
   "unit_api": {
-    "passed_tests": 10,
-    "core_api_coverage_percent": 90.75,
-    "api_routes": 4
+    "passed_tests": 13,
+    "core_api_coverage_percent": 87.02,
+    "api_routes": 4,
+    "scope": "Unit, API, authentication and read-only showcase tests"
   },
   "postgres": {
     "passed_tests": 2,
@@ -22,5 +23,5 @@
     "idempotent_unique_jobs": 1,
     "idempotent_actual_creations": 1
   },
-  "limits": "Local GitHub-hosted runner evidence only; claims_completed counts successful database acknowledgements, not exactly-once external side effects or production throughput."
+  "limits": "Local GitHub-hosted runner evidence only; claims_completed counts successful database acknowledgements, not exactly-once external side effects or production throughput. CI coverage is branch-dependent; 87.02% on latest recorded full run, older run 90.75%."
 }
