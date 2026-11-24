@@ -38,7 +38,7 @@ def main():
 
     status, raw, headers = request("/")
     assert status == 200 and "ClaimForge" in raw and "read-only" in raw.lower()
-    assert headers.get("X-Frame-Options") == "DENY", headers
+    assert {k.lower(): v for k, v in headers.items()}.get("x-frame-options") == "DENY", headers
 
     status, raw, _ = request("/metrics")
     assert status == 200
