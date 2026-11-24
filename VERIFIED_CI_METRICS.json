@@ -1,0 +1,26 @@
+{
+  "verification": "GitHub Actions completed successfully",
+  "run_url": "https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45395943869",
+  "commit_sha": "dd73049165d428cc496e748e824fe243811f94b6",
+  "environment": "GitHub-hosted Ubuntu runner, disposable PostgreSQL 16 service",
+  "unit_api": {
+    "passed_tests": 10,
+    "core_api_coverage_percent": 90.75,
+    "api_routes": 4
+  },
+  "postgres": {
+    "passed_tests": 2,
+    "worker_threads": 12,
+    "worker_threads_with_claims": 12,
+    "jobs_enqueued": 100,
+    "claims_completed": 100,
+    "unique_jobs_completed": 100,
+    "duplicate_claims": 0,
+    "runner_elapsed_seconds": 0.264,
+    "stale_claim_rejected": true,
+    "idempotent_parallel_submissions": 20,
+    "idempotent_unique_jobs": 1,
+    "idempotent_actual_creations": 1
+  },
+  "limits": "Local GitHub-hosted runner evidence only; claims_completed counts successful database acknowledgements, not exactly-once external side effects or production throughput."
+}
