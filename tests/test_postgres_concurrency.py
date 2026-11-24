@@ -52,7 +52,7 @@ def test_parallel_claims_and_reassignment():
         assert all(scheduler.get(job_id)["status"] == "completed" for job_id in ids)
 
         t0 = datetime.now(timezone.utc)
-        identifier, _ = scheduler.enqueue(f"{prefix}:reclaimed", "echo", {})
+        identifier, _ = scheduler.enqueue(f"{prefix}:reclaimed", "echo", {}, now=t0)
         old = scheduler.claim("expired-worker", lease_seconds=1, now=t0)
         fresh = scheduler.claim("replacement-worker", lease_seconds=10, now=t0 + timedelta(seconds=2))
         assert old is not None and fresh is not None
