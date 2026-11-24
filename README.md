@@ -14,6 +14,8 @@ Independent backend-engineering demonstration built with Python, FastAPI, SQLAlc
 ```bash
 docker compose up --build
 # API docs: http://localhost:8000/docs
+# Local-only development secret: local-dev-key-do-not-use-in-production
+# curl -H 'X-API-Key: local-dev-key-do-not-use-in-production' http://localhost:8000/stats
 ```
 
 ## Test
@@ -39,4 +41,4 @@ The [passing CI run](https://github.com/olabs123-hue/ClaimForge-Scheduler/action
 See [machine-readable metrics](VERIFIED_CI_METRICS.json) and the CI run's uploaded unit-coverage and PostgreSQL artifacts for original evidence.
 
 ## Scope and cautions
-This is an educational, independently developed service. Not Sharp Technologies proprietary code and not evidence of performance during employment. No authentication, hardened ingress or external execution sandbox; do not deploy it publicly with write endpoints or put real user data in it. Claim-token fencing protects database acknowledgements, **not external side effects**; handlers must be idempotent. The API is local-only; the worker only supports a predefined `echo` task. SQLite may be used for unit tests but does not validate PostgreSQL locking.
+This is an educational, independently developed service. Not Sharp Technologies proprietary code and not evidence of performance during employment. No authentication, hardened ingress or external execution sandbox; do not deploy it publicly with write endpoints or put real user data in it. Claim-token fencing protects database acknowledgements, **not external side effects**; handlers must be idempotent. The API uses a mandatory `X-API-Key` for operational endpoints and is appropriate only for authenticated staging until additional operational safeguards have been validated; the worker supports a predefined `echo` task. See [deployment and security runbook](DEPLOYMENT.md). SQLite may be used for unit tests but does not validate PostgreSQL locking.
