@@ -71,10 +71,14 @@ def test_expired_token_not_renewed(store):
         store.renew(lease, now=T0 + timedelta(seconds=2))
 
 
-def test_api_routes(store):
+def test_api_routes(store, monkeypatch):
+    from claimforge import api as api_module
+    monkeypatch.setattr(api_module, 'API_KEY', 'local-test-key')
     app.state.scheduler = store
     try:
-        client = TestClient(app)
+        client = TestClient(app, headers={'x-api-key': 'local-test-key'})
+        assert TestClient(app).get('/stats').status_code == 401
+        assert TestClient(app).post('/jobs', json={'idempotency_key':'not-allowed','kind':'echo','payload':{}}).status_code == 401
         assert client.get('/health').json()['status'] == 'ok'
         r = client.post('/jobs', json={'idempotency_key':'route-1','kind':'echo','payload':{'hello':'world'}})
         assert r.status_code == 201 and r.json()['created']
@@ -118,3 +122,19 @@ def test_number_of_public_routes():
     from claimforge.api import app
     paths = {r.path for r in app.routes if hasattr(r, 'methods') and r.path not in ('/openapi.json','/docs','/docs/oauth2-redirect','/redoc')}
     assert paths == {'/health', '/jobs', '/jobs/{job_id}', '/stats'}
+
+def test_large_payload_rejected_without_reading_body(store, monkeypatch):
+    from claimforge import api as api_module
+    monkeypatch.setattr(api_module, 'API_KEY', 'test-key')
+    client = TestClient(app)
+    response = client.post("/jobs", headers={"x-api-key": "test-key", "content-length": "65537"}, content="x")
+    assert response.status_code == 413
+
+
+def test_protected_routes_fail_closed_without_configured_key(monkeypatch):
+    from claimforge import api as api_module
+    monkeypatch.setattr(api_module, 'API_KEY', '')
+    client = TestClient(app)
+    assert client.get('/health').status_code == 200
+    assert client.get('/stats', headers={"x-api-key": "anything"}).status_code == 401
+    assert client.get('/jobs/1', headers={"x-api-key": "anything"}).status_code == 401
