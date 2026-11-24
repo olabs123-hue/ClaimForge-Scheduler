@@ -24,7 +24,19 @@ python -m pytest -q tests/test_core.py --cov=claimforge.core --cov=claimforge.ap
 TEST_DATABASE_URL=postgresql+psycopg://claimforge:claimforge@localhost:5432/claimforge_test python -m pytest -s -q tests/test_postgres_concurrency.py
 ```
 
-Local verification previously produced **10 passing tests**, **90.75% core/API coverage**, and **4 API routes**. Those numbers describe a local unit/API run. **Do not claim database concurrency results until the PostgreSQL GitHub Actions job passes.** The Postgres test targets 12 workers and 100 jobs plus 20 concurrent submissions, and emits an evidence JSON file only after assertions pass.
+## Verified GitHub Actions results
+
+[![ClaimForge CI](https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/workflows/ci.yml/badge.svg)](https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/workflows/ci.yml)
+
+The [passing CI run](https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45395943869) on a GitHub-hosted Ubuntu runner verified:
+- **10 passing unit/API tests**, **90.75% core/API coverage**, **4 API routes**.
+- **2 passing PostgreSQL 16 integration tests** with a disposable database.
+- **12 concurrent worker threads** completed **100 distinct job acknowledgements**, **0 duplicate claims**; every worker thread claimed at least one job.
+- **20 concurrent idempotent submissions** resulted in **1 unique job** and **1 actual creation**.
+- An expired lease token was rejected after reassignment.
+- The 100-job worker test measured **0.264 s** on this runner. This is a short, synthetic DB-ack test, **not** production throughput or an exactly-once external processing guarantee.
+
+See [machine-readable metrics](VERIFIED_CI_METRICS.json) and the CI run's uploaded unit-coverage and PostgreSQL artifacts for original evidence.
 
 ## Scope and cautions
 This is an educational, independently developed service. Not Sharp Technologies proprietary code and not evidence of performance during employment. No authentication, hardened ingress or external execution sandbox; do not deploy it publicly with write endpoints or put real user data in it. Claim-token fencing protects database acknowledgements, **not external side effects**; handlers must be idempotent. The API is local-only; the worker only supports a predefined `echo` task. SQLite may be used for unit tests but does not validate PostgreSQL locking.
