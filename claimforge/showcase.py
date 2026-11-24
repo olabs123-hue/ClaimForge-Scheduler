@@ -5,7 +5,7 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 app = FastAPI(title="ClaimForge Engineering Showcase", docs_url=None, redoc_url=None, openapi_url=None)
 REPO = "https://github.com/olabs123-hue/ClaimForge-Scheduler"
-CI = "https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45396993586"
+CI = "https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45397446865"
 
 EVIDENCE = {
     "product": "ClaimForge",
@@ -14,11 +14,11 @@ EVIDENCE = {
     "worker_running": False,
     "job_submissions_enabled": False,
     "github_repository": REPO,
-    "verified_ci_run": CI,
+    "verified_ci_run": "https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45397446865",
     "metrics": {
-        "unit_api_tests_passed": 12,
+        "unit_api_tests_passed": 13,
         "postgresql_integration_tests_passed": 2,
-        "core_api_coverage_percent": 90.75,
+        "core_api_coverage_percent": 87.02,
         "concurrent_worker_threads": 12,
         "distinct_jobs_acknowledged": 100,
         "duplicate_claims": 0,
@@ -54,9 +54,9 @@ def home():
 <header><div class="mark">ClaimForge<span style="color:#9bbfff">.</span></div><div class="status">Read-only verification showcase</div></header>
 <h1>Concurrency tested.<br>Failures anticipated.</h1>
 <p>ClaimForge is a PostgreSQL-backed job scheduler implementing transactional <code>SKIP LOCKED</code> claims, lease renewal, claim-token fencing, idempotent submission and bounded retries.</p>
-<div class="actions"><a class="btn primary" href="https://github.com/olabs123-hue/ClaimForge-Scheduler">View source on GitHub ↗</a><a class="btn" href="https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45396993586">Inspect passing CI ↗</a><a class="btn" href="/metrics">Machine-readable metrics ↗</a></div>
+<div class="actions"><a class="btn primary" href="https://github.com/olabs123-hue/ClaimForge-Scheduler">View source on GitHub ↗</a><a class="btn" href="https://github.com/olabs123-hue/ClaimForge-Scheduler/actions/runs/45397446865">Inspect passing CI ↗</a><a class="btn" href="/metrics">Machine-readable metrics ↗</a></div>
 <div class="eyebrow" style="margin-bottom:18px">Verified in GitHub Actions</div>
-<div class="metrics"><div class="metric"><div class="num">12</div><small>Concurrent worker threads</small></div><div class="metric"><div class="num">100</div><small>Distinct job DB acknowledgements</small></div><div class="metric"><div class="num">0</div><small>Duplicate job claims</small></div><div class="metric"><div class="num">90.75%</div><small>Core / API test coverage</small></div></div>
+<div class="metrics"><div class="metric"><div class="num">12</div><small>Concurrent worker threads</small></div><div class="metric"><div class="num">100</div><small>Distinct job DB acknowledgements</small></div><div class="metric"><div class="num">0</div><small>Duplicate job claims</small></div><div class="metric"><div class="num">87.02%</div><small>Core / API test coverage</small></div></div>
 <div class="line"></div><div class="cols"><section><h2>Reliability primitives</h2><ul><li>PostgreSQL <code>FOR UPDATE SKIP LOCKED</code></li><li>Lease renewal and expiration</li><li>Fencing of stale worker acknowledgements</li><li>Idempotent submission under contention</li><li>Bounded retries and dead-job transitions</li></ul></section><section><h2>Reproducible evidence</h2><ul><li>Unit/API and PostgreSQL integration suites</li><li>20 competing submissions → 1 unique job</li><li>Expired-token rejection tested</li><li>Docker Compose for local API and worker</li><li>CI artifacts and metrics available on GitHub</li></ul></section></div>
 <div class="notice"><strong>Deployment boundary.</strong> This page is a read-only showcase. No database or worker is connected to this public site, and job submission is disabled. All metrics are synthetic CI test results on a GitHub-hosted runner, not production throughput or exactly-once external execution guarantees.</div>
 </main></body></html>"""
